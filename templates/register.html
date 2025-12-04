@@ -1,0 +1,902 @@
+<!doctype html>
+<html lang="mr">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1" />
+<title>Register Student - Smart Attendance System</title>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+<style>
+  :root {
+    --primary: #7209b7;
+    --primary-dark: #5a08a0;
+    --secondary: #4361ee;
+    --success: #4cc9f0;
+    --danger: #f72585;
+    --light: #f8f9fa;
+    --dark: #212529;
+    --gray: #6c757d;
+    --gray-light: #e9ecef;
+    --border-radius: 12px;
+    --box-shadow: 0 8px 30px rgba(0,0,0,0.12);
+    --transition: all 0.3s ease;
+  }
+
+  * {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+  }
+
+  body {
+    background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+    min-height: 100vh;
+    padding: 20px;
+    color: var(--dark);
+  }
+
+  .container {
+    max-width: 1200px;
+    margin: 0 auto;
+  }
+
+  .header {
+    text-align: center;
+    margin-bottom: 40px;
+    padding-top: 20px;
+  }
+
+  .header h1 {
+    color: var(--primary);
+    font-size: 2.8rem;
+    margin-bottom: 10px;
+    font-weight: 700;
+    letter-spacing: -0.5px;
+  }
+
+  .header p {
+    color: var(--gray);
+    font-size: 1.1rem;
+    max-width: 600px;
+    margin: 0 auto;
+    line-height: 1.6;
+  }
+
+  .card {
+    background: white;
+    border-radius: var(--border-radius);
+    box-shadow: var(--box-shadow);
+    padding: 30px;
+    margin-bottom: 30px;
+    transition: var(--transition);
+  }
+
+  .card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 12px 40px rgba(0,0,0,0.15);
+  }
+
+  .card-title {
+    font-size: 1.5rem;
+    color: var(--primary);
+    margin-bottom: 25px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    border-bottom: 2px solid var(--gray-light);
+    padding-bottom: 15px;
+  }
+
+  .card-title i {
+    font-size: 1.8rem;
+  }
+
+  .registration-container {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 40px;
+    margin-bottom: 30px;
+  }
+
+  .form-section {
+    flex: 1;
+    min-width: 300px;
+  }
+
+  .camera-section {
+    flex: 1;
+    min-width: 300px;
+  }
+
+  .form-group {
+    margin-bottom: 25px;
+  }
+
+  .form-label {
+    display: block;
+    margin-bottom: 8px;
+    font-weight: 600;
+    color: var(--dark);
+    font-size: 1.05rem;
+  }
+
+  .form-label i {
+    margin-right: 8px;
+    color: var(--primary);
+  }
+
+  .form-input {
+    width: 100%;
+    padding: 14px 18px;
+    border: 2px solid var(--gray-light);
+    border-radius: var(--border-radius);
+    font-size: 1rem;
+    transition: var(--transition);
+    background: white;
+  }
+
+  .form-input:focus {
+    outline: none;
+    border-color: var(--primary);
+    box-shadow: 0 0 0 3px rgba(114, 9, 183, 0.1);
+  }
+
+  .form-select {
+    width: 100%;
+    padding: 14px 18px;
+    border: 2px solid var(--gray-light);
+    border-radius: var(--border-radius);
+    font-size: 1rem;
+    transition: var(--transition);
+    background: white;
+    cursor: pointer;
+    appearance: none;
+    background-image: url("data:image/svg+xml;charset=UTF-8,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%237209b7' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3e%3cpolyline points='6 9 12 15 18 9'%3e%3c/polyline%3e%3c/svg%3e");
+    background-repeat: no-repeat;
+    background-position: right 18px center;
+    background-size: 16px;
+  }
+
+  .form-select:focus {
+    outline: none;
+    border-color: var(--primary);
+    box-shadow: 0 0 0 3px rgba(114, 9, 183, 0.1);
+  }
+
+  .generated-info {
+    background: linear-gradient(135deg, #7209b7, #5a08a0);
+    color: white;
+    padding: 20px;
+    border-radius: var(--border-radius);
+    margin-top: 20px;
+  }
+
+  .info-item {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 15px;
+    padding-bottom: 15px;
+    border-bottom: 1px solid rgba(255,255,255,0.2);
+  }
+
+  .info-item:last-child {
+    margin-bottom: 0;
+    padding-bottom: 0;
+    border-bottom: none;
+  }
+
+  .info-label {
+    font-weight: 600;
+    opacity: 0.9;
+  }
+
+  .info-value {
+    font-weight: 700;
+    font-size: 1.1rem;
+  }
+
+  video, canvas {
+    width: 100%;
+    border-radius: var(--border-radius);
+    box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+    margin-bottom: 20px;
+  }
+
+  .controls {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 15px;
+    margin-top: 25px;
+  }
+
+  .btn {
+    padding: 14px 28px;
+    border: none;
+    border-radius: 50px;
+    font-weight: 600;
+    font-size: 1rem;
+    cursor: pointer;
+    transition: var(--transition);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    flex: 1;
+    min-width: 180px;
+  }
+
+  .btn-primary {
+    background: var(--primary);
+    color: white;
+  }
+
+  .btn-primary:hover {
+    background: var(--primary-dark);
+    transform: translateY(-3px);
+    box-shadow: 0 7px 20px rgba(114, 9, 183, 0.3);
+  }
+
+  .btn-success {
+    background: var(--success);
+    color: white;
+  }
+
+  .btn-success:hover {
+    background: #3bb5d8;
+    transform: translateY(-3px);
+    box-shadow: 0 7px 20px rgba(76, 201, 240, 0.3);
+  }
+
+  .btn-danger {
+    background: var(--danger);
+    color: white;
+  }
+
+  .btn-danger:hover {
+    background: #e11575;
+    transform: translateY(-3px);
+    box-shadow: 0 7px 20px rgba(247, 37, 133, 0.3);
+  }
+
+  .status-container {
+    background: #f8f9ff;
+    border-radius: var(--border-radius);
+    padding: 20px;
+    margin-top: 25px;
+    border-left: 5px solid var(--primary);
+  }
+
+  .status-title {
+    font-weight: 600;
+    color: var(--primary);
+    margin-bottom: 10px;
+    font-size: 1.1rem;
+  }
+
+  #status {
+    font-size: 1.1rem;
+    line-height: 1.6;
+    min-height: 24px;
+  }
+
+  .nav-links {
+    display: flex;
+    justify-content: center;
+    gap: 20px;
+    margin-top: 40px;
+  }
+
+  .nav-link {
+    padding: 15px 30px;
+    background: white;
+    color: var(--primary);
+    text-decoration: none;
+    border-radius: 50px;
+    font-weight: 600;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    transition: var(--transition);
+    box-shadow: 0 5px 15px rgba(0,0,0,0.08);
+  }
+
+  .nav-link:hover {
+    background: var(--primary);
+    color: white;
+    transform: translateY(-3px);
+    box-shadow: 0 8px 25px rgba(114, 9, 183, 0.3);
+  }
+
+  @media (max-width: 768px) {
+    .registration-container {
+      flex-direction: column;
+    }
+    
+    .header h1 {
+      font-size: 2.2rem;
+    }
+    
+    .controls {
+      flex-direction: column;
+    }
+    
+    .btn {
+      min-width: 100%;
+    }
+  }
+
+  .loading {
+    display: inline-block;
+    width: 20px;
+    height: 20px;
+    border: 3px solid rgba(255,255,255,.3);
+    border-radius: 50%;
+    border-top-color: white;
+    animation: spin 1s ease-in-out infinite;
+  }
+
+  @keyframes spin {
+    to { transform: rotate(360deg); }
+  }
+
+  .instruction-list {
+    margin-top: 20px;
+    padding-left: 20px;
+  }
+
+  .instruction-list li {
+    margin-bottom: 10px;
+    line-height: 1.6;
+    color: var(--gray);
+  }
+
+  /* NEW STYLES FOR AUTO CAPTURE */
+  .photo-preview-container {
+    display: flex;
+    gap: 10px;
+    margin: 15px 0;
+    flex-wrap: wrap;
+    justify-content: center;
+  }
+  
+  .photo-preview {
+    width: 80px;
+    height: 80px;
+    border: 2px solid #ddd;
+    border-radius: 8px;
+    overflow: hidden;
+    position: relative;
+  }
+  
+  .photo-preview img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+  
+  .photo-preview.active {
+    border-color: #4cc9f0;
+    border-width: 3px;
+  }
+  
+  .photo-count {
+    position: absolute;
+    top: 5px;
+    right: 5px;
+    background: rgba(0,0,0,0.7);
+    color: white;
+    border-radius: 50%;
+    width: 24px;
+    height: 24px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 12px;
+    font-weight: bold;
+  }
+  
+  .capture-progress {
+    margin: 15px 0;
+    padding: 15px;
+    background: #f8f9ff;
+    border-radius: var(--border-radius);
+    border-left: 4px solid #4361ee;
+  }
+  
+  .progress-bar {
+    height: 6px;
+    background: #e9ecef;
+    border-radius: 3px;
+    margin: 10px 0;
+    overflow: hidden;
+  }
+  
+  .progress-fill {
+    height: 100%;
+    background: linear-gradient(90deg, #4361ee, #4cc9f0);
+    width: 0%;
+    transition: width 0.3s ease;
+  }
+  
+  .auto-capture-message {
+    background: #e7f5ff;
+    padding: 10px 15px;
+    border-radius: 8px;
+    margin: 10px 0;
+    border-left: 4px solid #4cc9f0;
+  }
+
+  .success-message {
+    background: #e8f5e9;
+    padding: 15px;
+    border-radius: 8px;
+    margin: 10px 0;
+    border-left: 4px solid #4caf50;
+  }
+</style>
+</head>
+<body>
+  <div class="container">
+    <div class="header">
+      <h1><i class="fas fa-user-plus"></i> Register New Student</h1>
+      <p>Register students with automatic ID generation and auto-capture of 5 face photos for better accuracy.</p>
+    </div>
+
+    <div class="card">
+      <h2 class="card-title"><i class="fas fa-id-card"></i> Student Registration Form</h2>
+      
+      <div class="registration-container">
+        <div class="form-section">
+          <div class="form-group">
+            <label class="form-label" for="course">
+              <i class="fas fa-graduation-cap"></i> Select Course
+            </label>
+            <select id="course" class="form-select">
+              <option value="">-- Select Course --</option>
+              <option value="employee">Employee</option>
+              <option value="bca1">BCA 1st Year</option>
+              <option value="bca2">BCA 2nd Year</option>
+              <option value="bca3">BCA 3rd Year</option>
+            </select>
+          </div>
+
+          <div class="form-group">
+            <label class="form-label" for="name">
+              <i class="fas fa-user"></i> Full Name
+            </label>
+            <input type="text" id="name" class="form-input" placeholder="Enter student's full name">
+          </div>
+
+          <div class="generated-info">
+            <div class="info-item">
+              <div class="info-label">Generated ID:</div>
+              <div class="info-value" id="generatedId">-</div>
+            </div>
+            <div class="info-item">
+              <div class="info-label">Course:</div>
+              <div class="info-value" id="displayCourse">-</div>
+            </div>
+            <div class="info-item">
+              <div class="info-label">Registration Date:</div>
+              <div class="info-value" id="regDate">-</div>
+            </div>
+          </div>
+
+          <div class="status-container">
+            <div class="status-title">Registration Status</div>
+            <div id="status">Fill in the form and capture photos to register</div>
+          </div>
+
+          <ul class="instruction-list">
+            <li>Select course and enter full name</li>
+            <li>ID will be generated automatically</li>
+            <li>Click "Capture Photo" to auto-capture 5 photos</li>
+            <li>Look at camera and stay still during capture</li>
+            <li>Click "Register Student" to complete</li>
+          </ul>
+        </div>
+
+        <div class="camera-section">
+          <video id="video" width="480" height="360" autoplay muted></video>
+          <canvas id="canvas" width="480" height="360" style="display:none;"></canvas>
+          
+          <div class="controls">
+            <button id="startBtn" class="btn btn-primary">
+              <i class="fas fa-play"></i> Start Camera
+            </button>
+            <button id="captureBtn" class="btn btn-success">
+              <i class="fas fa-camera"></i> Capture Photo
+            </button>
+            <button id="stopBtn" class="btn btn-danger">
+              <i class="fas fa-stop"></i> Stop Camera
+            </button>
+          </div>
+          
+          <button id="registerBtn" class="btn btn-primary" style="margin-top: 20px; width: 100%;" disabled>
+            <i class="fas fa-user-plus"></i> Register Student
+          </button>
+        </div>
+      </div>
+    </div>
+    
+    <div class="nav-links">
+      <a href="/webcam-page" class="nav-link">
+        <i class="fas fa-camera"></i> Mark Attendance
+      </a>
+      <a href="/" class="nav-link">
+        <i class="fas fa-home"></i> Back to Home
+      </a>
+    </div>
+  </div>
+
+  <script>
+    const video = document.getElementById('video');
+    const canvas = document.getElementById('canvas');
+    const startBtn = document.getElementById('startBtn');
+    const captureBtn = document.getElementById('captureBtn');
+    const stopBtn = document.getElementById('stopBtn');
+    const registerBtn = document.getElementById('registerBtn');
+    const status = document.getElementById('status');
+    const courseSelect = document.getElementById('course');
+    const nameInput = document.getElementById('name');
+    const generatedId = document.getElementById('generatedId');
+    const displayCourse = document.getElementById('displayCourse');
+    const regDate = document.getElementById('regDate');
+
+    let stream = null;
+    let capturedPhoto = null;
+    let generatedUserId = '';
+    let isProcessing = false;
+    
+    // NEW VARIABLES FOR AUTO CAPTURE
+    let capturedPhotos = [];
+    let isAutoCapturing = false;
+    let captureInterval;
+    let photoCount = 0;
+
+    // Update generated info when course or name changes
+    courseSelect.addEventListener('change', updateGeneratedInfo);
+    nameInput.addEventListener('input', updateGeneratedInfo);
+
+    // Set current date
+    const now = new Date();
+    regDate.textContent = now.toLocaleDateString('en-IN');
+
+    function updateGeneratedInfo() {
+      const course = courseSelect.value;
+      const name = nameInput.value.trim();
+      
+      if (course && name) {
+        // Generate ID based on course and name
+        const coursePrefix = getCoursePrefix(course);
+        const nameInitials = name.split(' ').map(n => n[0]).join('').toUpperCase();
+        const randomNum = Math.floor(1000 + Math.random() * 9000);
+        generatedUserId = `${coursePrefix}${nameInitials}${randomNum}`;
+        
+        generatedId.textContent = generatedUserId;
+        displayCourse.textContent = getCourseName(course);
+        
+        // Enable register button if photos are captured
+        if (capturedPhotos.length > 0) {
+          registerBtn.disabled = false;
+        }
+      } else {
+        generatedId.textContent = '-';
+        displayCourse.textContent = '-';
+        registerBtn.disabled = true;
+      }
+    }
+
+    function getCoursePrefix(course) {
+      const prefixes = {
+        'employee': 'EMP',
+        'bca1': 'BCA1',
+        'bca2': 'BCA2',
+        'bca3': 'BCA3'
+      };
+      return prefixes[course] || 'STU';
+    }
+
+    function getCourseName(course) {
+      const names = {
+        'employee': 'Employee',
+        'bca1': 'BCA 1st Year',
+        'bca2': 'BCA 2nd Year',
+        'bca3': 'BCA 3rd Year'
+      };
+      return names[course] || 'Student';
+    }
+
+    async function startCamera() {
+      if (stream) return;
+      
+      try {
+        status.innerHTML = '<span class="loading"></span> Starting camera...';
+        
+        stream = await navigator.mediaDevices.getUserMedia({ 
+          video: { facingMode: "user", width: { ideal: 1280 }, height: { ideal: 720 } }, 
+          audio: false 
+        });
+        
+        video.srcObject = stream;
+        status.innerHTML = '<i class="fas fa-check-circle" style="color:#4cc9f0"></i> Camera is active. Position your face in the frame.';
+        startBtn.disabled = true;
+        captureBtn.disabled = false;
+        
+      } catch (err) {
+        console.error(err);
+        status.innerHTML = '<i class="fas fa-exclamation-triangle" style="color:#f72585"></i> Cannot access camera. Please check permissions.';
+      }
+    }
+
+    function stopCamera() {
+      if (stream) {
+        stream.getTracks().forEach(t => t.stop());
+        stream = null;
+      }
+      video.srcObject = null;
+      status.innerHTML = '<i class="fas fa-stop-circle" style="color:#6c757d"></i> Camera stopped.';
+      startBtn.disabled = false;
+      captureBtn.disabled = true;
+    }
+
+    startBtn.addEventListener('click', () => startCamera());
+    stopBtn.addEventListener('click', () => stopCamera());
+
+    // UPDATED CAPTURE BUTTON CLICK EVENT
+    captureBtn.addEventListener('click', async () => {
+      if (!stream) { 
+        status.innerHTML = '<i class="fas fa-exclamation-triangle" style="color:#f72585"></i> Please start camera first.'; 
+        return; 
+      }
+      
+      if (isAutoCapturing) return;
+      
+      // Start auto-capture of 5 photos
+      startAutoCapture();
+    });
+    
+    function startAutoCapture() {
+      if (capturedPhotos.length >= 5) {
+        capturedPhotos = []; // Reset if already 5
+      }
+      
+      isAutoCapturing = true;
+      photoCount = 0;
+      capturedPhotos = [];
+      
+      captureBtn.innerHTML = '<span class="loading"></span> Auto-capturing...';
+      captureBtn.disabled = true;
+      
+      status.innerHTML = '<div class="auto-capture-message"><i class="fas fa-camera"></i> Auto-capturing 5 photos. Look at the camera and stay still...</div>';
+      
+      // Create photo preview container
+      let previewContainer = document.querySelector('.photo-preview-container');
+      if (!previewContainer) {
+        previewContainer = document.createElement('div');
+        previewContainer.className = 'photo-preview-container';
+        status.parentNode.insertBefore(previewContainer, status.nextSibling);
+      }
+      previewContainer.innerHTML = '';
+      
+      // Capture first photo immediately
+      capturePhoto();
+      
+      // Then capture remaining photos every 1.5 seconds
+      captureInterval = setInterval(() => {
+        if (photoCount < 5) {
+          capturePhoto();
+        } else {
+          finishAutoCapture();
+        }
+      }, 1500);
+    }
+    
+    function capturePhoto() {
+      if (photoCount >= 5) return;
+      
+      // Capture current frame
+      const tempCanvas = document.createElement('canvas');
+      tempCanvas.width = video.videoWidth;
+      tempCanvas.height = video.videoHeight;
+      const ctx = tempCanvas.getContext('2d');
+      ctx.drawImage(video, 0, 0);
+      
+      // Convert to base64
+      const photoData = tempCanvas.toDataURL('image/jpeg', 0.9);
+      capturedPhotos.push(photoData);
+      photoCount++;
+      
+      // Update progress
+      updateCaptureProgress();
+      
+      // Show preview
+      showPhotoPreview(photoData, photoCount);
+      
+      // Flash effect
+      video.style.boxShadow = '0 0 0 3px #4cc9f0';
+      setTimeout(() => {
+        video.style.boxShadow = '0 5px 15px rgba(0,0,0,0.1)';
+      }, 200);
+      
+      // Play capture sound
+      playCaptureSound();
+    }
+    
+    function updateCaptureProgress() {
+      let progressContainer = document.querySelector('.capture-progress');
+      if (!progressContainer) {
+        progressContainer = document.createElement('div');
+        progressContainer.className = 'capture-progress';
+        document.querySelector('.photo-preview-container').parentNode.insertBefore(
+          progressContainer, 
+          document.querySelector('.photo-preview-container').nextSibling
+        );
+      }
+      
+      const percent = (photoCount / 5) * 100;
+      progressContainer.innerHTML = `
+        <div style="display: flex; justify-content: space-between; margin-bottom: 5px;">
+          <span>Capturing photos: ${photoCount}/5</span>
+          <span>${percent.toFixed(0)}%</span>
+        </div>
+        <div class="progress-bar">
+          <div class="progress-fill" style="width: ${percent}%"></div>
+        </div>
+      `;
+    }
+    
+    function showPhotoPreview(photoData, index) {
+      const previewContainer = document.querySelector('.photo-preview-container');
+      const preview = document.createElement('div');
+      preview.className = `photo-preview ${index === photoCount ? 'active' : ''}`;
+      
+      const img = document.createElement('img');
+      img.src = photoData;
+      
+      const countBadge = document.createElement('div');
+      countBadge.className = 'photo-count';
+      countBadge.textContent = index;
+      
+      preview.appendChild(img);
+      preview.appendChild(countBadge);
+      previewContainer.appendChild(preview);
+      
+      // Scroll to show new photo
+      preview.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+    }
+    
+    function finishAutoCapture() {
+      clearInterval(captureInterval);
+      isAutoCapturing = false;
+      
+      captureBtn.innerHTML = '<i class="fas fa-camera"></i> Recapture Photos';
+      captureBtn.disabled = false;
+      
+      if (capturedPhotos.length > 0) {
+        status.innerHTML = `<div class="success-message">
+          <i class="fas fa-check-circle" style="color:#4caf50"></i> Successfully captured ${capturedPhotos.length} photos! Ready to register.
+        </div>`;
+        
+        // Enable register button if form is filled
+        if (courseSelect.value && nameInput.value.trim()) {
+          registerBtn.disabled = false;
+        }
+      } else {
+        status.innerHTML = '<i class="fas fa-exclamation-triangle" style="color:#f72585"></i> No photos captured. Try again.';
+      }
+    }
+    
+    function playCaptureSound() {
+      // Simple beep sound
+      try {
+        const audioContext = new (window.AudioContext || window.webkitAudioContext)();
+        const oscillator = audioContext.createOscillator();
+        const gainNode = audioContext.createGain();
+        
+        oscillator.connect(gainNode);
+        gainNode.connect(audioContext.destination);
+        
+        oscillator.frequency.value = 800;
+        oscillator.type = 'sine';
+        
+        gainNode.gain.setValueAtTime(0.3, audioContext.currentTime);
+        gainNode.gain.exponentialRampToValueAtTime(0.01, audioContext.currentTime + 0.1);
+        
+        oscillator.start(audioContext.currentTime);
+        oscillator.stop(audioContext.currentTime + 0.1);
+      } catch (e) {
+        console.log("Audio not supported");
+      }
+    }
+    
+    // UPDATED REGISTER BUTTON CLICK EVENT
+    registerBtn.addEventListener('click', async () => {
+      const course = courseSelect.value;
+      const name = nameInput.value.trim();
+      
+      if (!course) {
+        status.innerHTML = '<i class="fas fa-exclamation-triangle" style="color:#f72585"></i> Please select a course.';
+        return;
+      }
+      
+      if (!name) {
+        status.innerHTML = '<i class="fas fa-exclamation-triangle" style="color:#f72585"></i> Please enter student name.';
+        return;
+      }
+      
+      if (capturedPhotos.length === 0) {
+        status.innerHTML = '<i class="fas fa-exclamation-triangle" style="color:#f72585"></i> Please capture photos first.';
+        return;
+      }
+      
+      if (isProcessing) return;
+      
+      isProcessing = true;
+      registerBtn.innerHTML = '<span class="loading"></span> Registering...';
+      registerBtn.disabled = true;
+      
+      const fd = new FormData();
+      fd.append('name', name);
+      fd.append('course', course);
+      
+      // Add all captured photos
+      capturedPhotos.forEach((photo, index) => {
+        fd.append('photos[]', photo);
+      });
+
+      status.innerHTML = '<span class="loading"></span> Registering student with ' + capturedPhotos.length + ' photos...';
+      
+      try {
+        const res = await fetch('/api/register', { 
+          method: 'POST', 
+          body: fd 
+        });
+        const data = await res.json();
+        
+        if (res.ok) {
+          status.innerHTML = `<div class="success-message">
+            <i class="fas fa-check-circle" style="color:#4caf50; font-size:1.2rem;"></i>
+            <h3 style="margin:10px 0 5px 0;">Registration Successful!</h3>
+            <p>Student: <strong>${data.name}</strong></p>
+            <p>ID: <strong>${data.id}</strong></p>
+            <p>Course: <strong>${data.course}</strong></p>
+            <p>Photos captured: <strong>${data.photos_count}</strong></p>
+          </div>`;
+          
+          // Reset form
+          courseSelect.value = '';
+          nameInput.value = '';
+          capturedPhotos = [];
+          document.querySelector('.photo-preview-container')?.remove();
+          document.querySelector('.capture-progress')?.remove();
+          registerBtn.disabled = true;
+          
+          // Restart camera
+          if (stream) {
+            stopCamera();
+            setTimeout(() => startCamera(), 1000);
+          }
+          
+        } else {
+          status.innerHTML = `<i class="fas fa-exclamation-triangle" style="color:#f72585"></i> Error: ${data.error || 'Registration failed'}`;
+        }
+      } catch (err) {
+        console.error(err);
+        status.innerHTML = '<i class="fas fa-exclamation-triangle" style="color:#f72585"></i> Registration failed. Check connection.';
+      } finally {
+        isProcessing = false;
+        registerBtn.innerHTML = '<i class="fas fa-user-plus"></i> Register Student';
+        registerBtn.disabled = false;
+      }
+    });
+
+    // Auto-start camera for better UX
+    setTimeout(() => {
+      if (!stream) {
+        startBtn.click();
+      }
+    }, 500);
+  </script>
+</body>
+</html>
