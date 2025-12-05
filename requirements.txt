@@ -1,0 +1,7 @@
+Flask
+Pillow
+numpy
+insightface
+onnxruntime
+opencv-python-headless
+requests
